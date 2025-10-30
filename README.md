@@ -1,4 +1,4 @@
-# Kubernetes Helm-Driven Configuration Management with Rolling Updates
+trou# Kubernetes Helm-Driven Configuration Management with Rolling Updates
 
 
 ---
@@ -386,55 +386,6 @@ kubectl exec -n demo ${POD_NAME} -- env | grep APP_MESSAGE
 APP_MESSAGE=hola
 ```
 
----
-
-## Troubleshooting Guide
-
-### Pods Not Updating
-
-**Diagnosis**:
-```bash
-kubectl get deployment web-tiny-http-app -n demo -o yaml | grep checksum
-kubectl get configmap -n demo
-helm status web -n demo
-```
-
-**Resolution**:
-```bash
-kubectl rollout restart deployment/web-tiny-http-app -n demo
-```
-
-### Service Not Accessible
-
-**Diagnosis**:
-```bash
-kubectl get endpoints -n demo
-kubectl describe svc web-tiny-http-app -n demo
-kubectl get pods -n demo
-```
-
-**Resolution**:
-```bash
-# Test from within cluster
-kubectl run -it --rm debug --image=busybox --restart=Never -- \
-  wget -O- http://web-tiny-http-app.demo:8080/version
-```
-
-### Image Pull Errors
-
-**Diagnosis**:
-```bash
-kubectl describe pod ${POD_NAME} -n demo | grep -A 5 "Events"
-```
-
-**Resolution**:
-```bash
-# Verify image exists
-docker pull jasonsanjay/tiny-http-app:latest
-
-# Check image name in values.yaml
-cat tiny-http-app/values.yaml | grep repository
-```
 
 ---
 
@@ -468,6 +419,3 @@ terraform destroy -auto-approve
 
 ---
 
-## License
-
-MIT
