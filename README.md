@@ -1,4 +1,4 @@
-trou# Kubernetes Helm-Driven Configuration Management with Rolling Updates
+# Kubernetes Helm-Driven Configuration Management with Rolling Updates
 
 
 ---
